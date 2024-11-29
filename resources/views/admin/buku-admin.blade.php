@@ -52,11 +52,11 @@
                                     <tr>
                                         <td>{{ $loop->iteration }}</td>
                                         <td>{{ $bukus->buku_judul }}</td>
-                                        <td>{{ $bukus->penulis->penulis_nama }}</td>
-                                        <td>{{ $bukus->penerbit->penerbit_nama }}</td>
+                                        <td>{{ $bukus->penulis_nama }}</td>
+                                        <td>{{ $bukus->penerbit_nama }}</td>
                                         <td>{{ $bukus->buku_thnterbit }}</td>
-                                        <td>{{ $bukus->kategori->kategori_nama }}</td>
-                                        <td>{{ $bukus->rak->rak_nama }}</td>
+                                        <td>{{ $bukus->kategori_nama }}</td>
+                                        <td>{{ $bukus->rak_nama }}</td>
                                         <td>{{ $bukus->buku_isbn }}</td>
                                         <td>
                                             <div class="d-flex">
@@ -78,6 +78,7 @@
                                 @endforeach
                             </tbody>
                         </table>
+                        {{ $buku->links() }}
                     </div>
                 </div>
             </main>

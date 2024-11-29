@@ -9,6 +9,7 @@ use App\Models\Rak;
 use App\Models\Penulis;
 use App\Models\Penerbit;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class PagesController extends Controller
 {
@@ -29,7 +30,17 @@ class PagesController extends Controller
 
     public function bukuAdmin()
     {
-        $data = Buku::with(['penerbit', 'penulis', 'rak', 'kategori'])->get();
+        // eloquent
+        // $data = Buku::with(['penerbit', 'penulis', 'rak', 'kategori'])->get();
+
+        // query builder
+        $data = DB::table('buku')
+            ->join('penulis', 'buku.buku_penulis_id', 'penulis.penulis_id')
+            ->join('penerbit', 'buku.buku_penerbit_id', 'penerbit.penerbit_id')
+            ->join('kategori', 'buku.buku_kategori_id', 'kategori.kategori_id')
+            ->join('rak', 'buku.buku_rak_id', 'rak.rak_id')
+            ->select('buku.*', 'penulis.penulis_nama', 'penerbit.penerbit_nama', 'kategori.kategori_nama', 'rak.rak_nama')
+            ->paginate(10);
 
         // return $data;
 

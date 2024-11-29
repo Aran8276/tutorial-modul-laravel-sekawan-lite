@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Peminjaman;
 use App\Models\PeminjamanDetail;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class PeminjamanController extends Controller
 {
@@ -28,8 +29,13 @@ class PeminjamanController extends Controller
             'peminjaman_detail_buku_id' => $id,
         ];
 
-        Peminjaman::create($data_peminjaman);
-        PeminjamanDetail::create($data_peminjaman_detail);
+        // eloquent
+        // Peminjaman::create($data_peminjaman);
+        // PeminjamanDetail::create($data_peminjaman_detail);
+
+        // query builder
+        DB::table('peminjaman')->insert($data_peminjaman);
+        DB::table('peminjaman_detail')->insert($data_peminjaman_detail);
 
         return redirect()->route('peminjamanSiswa')->with('success', 'Anda berhasil meminjam buku!');
     }
