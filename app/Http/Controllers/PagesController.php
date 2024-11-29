@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Buku;
 use App\Models\Kategori;
+use App\Models\Peminjaman;
 use App\Models\Rak;
 use App\Models\Penulis;
 use App\Models\Penerbit;
@@ -149,12 +150,16 @@ class PagesController extends Controller
 
     public function peminjamanAdmin()
     {
-        return view("admin.peminjaman-admin", ['level' => 'admin']);
+        $peminjaman = Peminjaman::with(['user', 'buku'])->get();
+
+        return view("admin.peminjaman-admin", ['level' => 'admin', 'peminjaman' => $peminjaman]);
     }
 
-    public function editPeminjamanAdmin()
+    public function editPeminjamanAdmin($id)
     {
-        return view("admin.edit-peminjaman-admin", ['level' => 'admin']);
+        $peminjaman = Peminjaman::with(['user'])->get()->find($id);
+
+        return view("admin.edit-peminjaman-admin", ['level' => 'admin', 'peminjaman' => $peminjaman]);
     }
 
     public function pengaturanAdmin()
@@ -169,12 +174,16 @@ class PagesController extends Controller
 
     public function bukuSiswa()
     {
-        return view("siswa.buku-siswa", ["level" => "siswa"]);
+        $buku = Buku::with(['penulis'])->get();
+
+        return view("siswa.buku-siswa", ["level" => "siswa", "buku" => $buku]);
     }
 
     public function peminjamanSiswa()
     {
-        return view("siswa.peminjaman-siswa", ["level" => "siswa"]);
+        $peminjaman = Peminjaman::with(['buku'])->get();
+
+        return view("siswa.peminjaman-siswa", ["level" => "siswa", "peminjaman" => $peminjaman]);
     }
 
     public function pengaturanSiswa()

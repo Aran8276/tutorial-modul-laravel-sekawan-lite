@@ -5,6 +5,7 @@ use App\Http\Controllers\KategoriController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\RakController;
 use App\Http\Controllers\PagesController;
+use App\Http\Controllers\PeminjamanController;
 use App\Http\Controllers\PenulisController;
 use App\Http\Controllers\PenerbitController;
 
@@ -68,8 +69,10 @@ Route::delete('/hapus-penerbit-admin/{id}', [PenerbitController::class, 'delete'
 
 // peminjaman
 Route::get('/peminjaman-admin', [PagesController::class, 'peminjamanAdmin'])->name('peminjamanAdmin');
-Route::get('/edit-peminjaman-admin', [PagesController::class, 'editPeminjamanAdmin'])->name('editPeminjamanAdmin');
+Route::get('/edit-peminjaman-admin/{id}', [PagesController::class, 'editPeminjamanAdmin'])->name('editPeminjamanAdmin');
 
+Route::put('/update-peminjaman-admin/{id}', [PeminjamanController::class, 'update'])->name('action.update-peminjaman');
+Route::delete('/hapus-peminjaman-admin/{id}', [PeminjamanController::class, 'delete'])->name('action.delete-peminjaman');
 // pengaturan
 Route::get('/pengaturan-admin', [PagesController::class, 'pengaturanAdmin'])->name('pengaturanAdmin');
 
@@ -78,3 +81,4 @@ Route::get('/dashboard', [PagesController::class, 'dashboardSiswa'])->name('dash
 Route::get('/buku', [PagesController::class, 'bukuSiswa'])->name('bukuSiswa');
 Route::get('/peminjaman', [PagesController::class, 'peminjamanSiswa'])->name('peminjamanSiswa');
 Route::get('/pengaturan', [PagesController::class, 'pengaturanSiswa'])->name('pengaturanSiswa');
+Route::get('/pinjam/{id}', [PeminjamanController::class, 'create'])->name('action.pinjam-buku');

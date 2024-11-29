@@ -18,6 +18,17 @@
                             Halaman Data Peminjaman
                         </li>
                     </ol>
+                    @if (session('success'))
+                        <div class="alert alert-success alert-dismissible fade show" role="alert">
+                            <strong>Berhasil!</strong> {{ session('success') }}
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+                    @elseif (session('updated'))
+                        <div class="alert alert-info alert-dismissible fade show" role="alert">
+                            <strong>Berhasil!</strong> {{ session('updated') }}
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+                    @endif
                     <div class="table-responsive">
                         <table class="table table-bordered">
                             <thead>
@@ -34,55 +45,44 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <td>1</td>
-                                    <td>Siswa 1</td>
-                                    <td>Bulan</td>
-                                    <td>2024-12-01</td>
-                                    <td></td>
-                                    <td>Meminjam</td>
-                                    <td></td>
-                                    <td></td>
-                                    <td>
-                                        <a href="{{ route('editPeminjamanAdmin') }}" class="btn btn-warning">
-                                            Update
-                                        </a>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>2</td>
-                                    <td>Siswa 2</td>
-                                    <td>Bulan</td>
-                                    <td>2023-12-01</td>
-                                    <td>2024-08-12</td>
-                                    <td>Selesai</td>
-                                    <td>Telat Mengumpulkan</td>
-                                    <td>Rp250,000</td>
-                                    <td>
-                                        <form action="">
-                                            <button class="btn btn-danger" type="submit">
-                                                Hapus
-                                            </button>
-                                        </form>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>3</td>
-                                    <td>Siswa 2</td>
-                                    <td>Bulan</td>
-                                    <td>2023-12-01</td>
-                                    <td>2024-08-12</td>
-                                    <td>Selesai</td>
-                                    <td></td>
-                                    <td></td>
-                                    <td>
-                                        <form action="">
-                                            <button class="btn btn-danger" type="submit">
-                                                Hapus
-                                            </button>
-                                        </form>
-                                    </td>
-                                </tr>
+                                @foreach ($peminjaman as $peminjamans)
+                                    <tr>
+                                        <td>{{ $loop->iteration }}</td>
+                                        <td>{{ $peminjamans->user->user_username }}</td>
+                                        <td>{{ $peminjamans->buku[0]->buku_judul }}</td>
+                                        <td>{{ $peminjamans->peminjaman_tglpinjam }}</td>
+
+
+                                        @if ($peminjamans->peminjaman_statuskembali == 0)
+                                            <td>-</td>
+                                            <td>Meminjam</td>
+                                            <td>-</td>
+                                            <td>-</td>
+                                            <td>
+                                                <a href="{{ route('editPeminjamanAdmin', ['id' => $peminjamans->peminjaman_id]) }}"
+                                                    class="btn btn-warning">
+                                                    Update
+                                                </a>
+                                            </td>
+                                        @else
+                                            <td>{{ $peminjamans->peminjaman_tglkembali }}</td>
+                                            <td>Selesai</td>
+                                            <td>{{ $peminjamans->peminjaman_note }}</td>
+                                            <td>{{ $peminjamans->peminjaman_denda }}</td>
+                                            <td>
+                                                <form
+                                                    action="{{ route('action.delete-peminjaman', ['id' => $peminjamans->peminjaman_id]) }}"
+                                                    method="POST">
+                                                    @method('DELETE')
+                                                    @csrf
+                                                    <button class="btn btn-danger" type="submit">
+                                                        Hapus
+                                                    </button>
+                                                </form>
+                                            </td>
+                                        @endif
+                                    </tr>
+                                @endforeach
                             </tbody>
                         </table>
                     </div>

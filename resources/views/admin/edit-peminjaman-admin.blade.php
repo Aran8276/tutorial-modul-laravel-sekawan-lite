@@ -18,46 +18,25 @@
                             Halaman Update Peminjaman Buku
                         </li>
                     </ol>
-                    <form action="/admin_peminjaman.html">
+                    <form action="{{ route('action.update-peminjaman', ['id' => $peminjaman->peminjaman_id]) }}"
+                        method="POST">
+                        @csrf
+                        @method('PUT')
                         <div class="row gap-3">
                             <div class="col-12 col-md-4 form-group">
-                                <label class="form-label"
-                                    >Nama peminjam</label
-                                >
-                                <input
-                                    type="text"
-                                    disabled
-                                    class="form-control"
-                                    value="Nama Peminjam"
-                                />
+                                <label class="form-label">Nama peminjam</label>
+                                <input value="{{ $peminjaman->user->user_username }}" type="text" disabled
+                                    class="form-control" value="Nama Peminjam" />
                             </div>
                             <div class="col-12 col-md-4 form-group">
-                                <label
-                                    for="peminjaman_denda"
-                                    class="form-label"
-                                    >Denda</label
-                                >
-                                <input
-                                    type="number"
-                                    name="peminjaman_denda"
-                                    id="peminjaman_denda"
-                                    class="form-control"
-                                    placeholder="Masukkan denda peminjaman"
-                                />
+                                <label for="peminjaman_denda" class="form-label">Denda</label>
+                                <input type="number" name="peminjaman_denda" id="peminjaman_denda" class="form-control"
+                                    placeholder="Masukkan denda peminjaman" />
                             </div>
                             <div class="col-12 col-md-4 form-group">
-                                <label
-                                    for="peminjaman_note"
-                                    class="form-label"
-                                    >Catatan</label
-                                >
-                                <input
-                                    type="text"
-                                    name="peminjaman_note"
-                                    id="peminjaman_note"
-                                    class="form-control"
-                                    placeholder="Masukkan catatan peminjaman"
-                                />
+                                <label for="peminjaman_note" class="form-label">Catatan</label>
+                                <input type="text" name="peminjaman_note" id="peminjaman_note" class="form-control"
+                                    placeholder="Masukkan catatan peminjaman" />
                             </div>
                         </div>
                         <div class="row my-3">
