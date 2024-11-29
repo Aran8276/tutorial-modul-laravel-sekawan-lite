@@ -17,11 +17,26 @@ class User extends Authenticatable
      *
      * @var array<int, string>
      */
+
+    protected $table = 'users';
+    protected $primaryKey = 'user_id';
+    public $timestamps = false;
     protected $fillable = [
-        'name',
-        'email',
-        'password',
+        "user_id",
+        "user_nama",
+        "user_alamat",
+        "user_username",
+        "user_email",
+        "user_notelp",
+        "user_password",
+        "user_level",
     ];
+
+    public function getAuthPassword()
+    {
+        // Karena kolum password kita `user_password` kita harus deklarasikan ini dulu
+        return $this->user_password;
+    }
 
     /**
      * The attributes that should be hidden for serialization.

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Peminjaman;
 use App\Models\PeminjamanDetail;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 class PeminjamanController extends Controller
@@ -12,7 +13,7 @@ class PeminjamanController extends Controller
     public function create(Request $request, $id)
     {
         // `user123` didapatkan dari table data phpMyAdmin yang kita buat tadi
-        $user_id = 'user123';
+        $user_id = Auth::user()->user_id;
         $peminjaman_id = mt_rand(1000000000000000, 9999999999999999);
         $data_peminjaman = [
             'peminjaman_id' => $peminjaman_id,

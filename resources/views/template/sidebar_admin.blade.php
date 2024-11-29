@@ -52,7 +52,7 @@
                         </div>
                         Pengaturan
                     </a>
-                    <a class="nav-link" href={{ route('login') }}>
+                    <a class="nav-link" href={{ route('action.logout') }}>
                         <div class="sb-nav-link-icon">
                             <i class="fas fa-right-from-bracket"></i>
                         </div>
@@ -62,7 +62,7 @@
             </div>
             <div class="sb-sidenav-footer">
                 <div class="small">Logged in as:</div>
-                Admin Perpustakaan
+                {{ Auth::user()->user_username }}
             </div>
         </nav>
     </div>
@@ -96,7 +96,7 @@
                         </div>
                         Pengaturan
                     </a>
-                    <a class="nav-link" href="{{ route('login') }}">
+                    <a class="nav-link" href="{{ route('action.logout') }}">
                         <div class="sb-nav-link-icon">
                             <i class="fas fa-right-from-bracket"></i>
                         </div>
@@ -106,7 +106,7 @@
             </div>
             <div class="sb-sidenav-footer">
                 <div class="small">Logged in as:</div>
-                Siswa
+                {{ Auth::user()->user_username }}
             </div>
         </nav>
     </div>

@@ -2,14 +2,15 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Buku;
-use App\Models\Kategori;
-use App\Models\Peminjaman;
 use App\Models\Rak;
+use App\Models\Buku;
 use App\Models\Penulis;
+use App\Models\Kategori;
 use App\Models\Penerbit;
+use App\Models\Peminjaman;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 
 class PagesController extends Controller
 {
@@ -192,7 +193,9 @@ class PagesController extends Controller
 
     public function peminjamanSiswa()
     {
-        $peminjaman = Peminjaman::with(['buku'])->get();
+        $user_id = Auth::user()->user_id;
+
+        $peminjaman = Peminjaman::with(['buku'])->where("peminjaman_user_id", $user_id)->get();
 
         return view("siswa.peminjaman-siswa", ["level" => "siswa", "peminjaman" => $peminjaman]);
     }

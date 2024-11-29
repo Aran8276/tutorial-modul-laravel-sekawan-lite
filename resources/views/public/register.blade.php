@@ -9,7 +9,9 @@
                 <h3 class="text-center">Register - Web Perpustakaan</h3>
             </div>
             <div class="card-body">
-                <form action="/siswa_dashboard.html">
+                <form action="{{ route('action.register') }}" method="POST">
+                    @csrf
+                    @method('POST')
                     <div class="form-group">
                         <label for="user_nama" class="form-label">Nama panjang *</label>
                         <input type="text" name="user_nama" id="user_nama" class="form-control"
@@ -36,8 +38,8 @@
                             placeholder="Masukkan nomor telepon Anda" />
                     </div>
                     <div class="form-group my-3">
-                        <label for="password" class="form-label">Password *</label>
-                        <input type="password" name="password" id="password" class="form-control"
+                        <label for="user_password" class="form-label">Password *</label>
+                        <input type="password" name="user_password" id="user_password" class="form-control"
                             placeholder="Masukkan password Anda" />
                     </div>
                     <div class="form-group my-3">
