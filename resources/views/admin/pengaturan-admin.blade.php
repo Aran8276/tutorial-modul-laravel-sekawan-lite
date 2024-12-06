@@ -18,37 +18,50 @@
                             Halaman Pengaturan User
                         </li>
                     </ol>
-                    <form action="">
+                    @if (session('success'))
+                        <div class="alert alert-success alert-dismissible fade show" role="alert">
+                            <strong>Berhasil!</strong> {{ session('success') }}
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+                    @elseif (session('updated'))
+                        <div class="alert alert-info alert-dismissible fade show" role="alert">
+                            <strong>Berhasil!</strong> {{ session('updated') }}
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+                    @endif
+                    <form action="{{ route('action.update-profile') }}" method="POST">
+                        @csrf
+                        @method('PUT')
                         <div class="row gap-3">
                             <div class="col-12 col-md-4 form-group">
                                 <label for="user_nama" class="form-label">Nama panjang</label>
-                                <input type="text" name="user_nama" id="user_nama" class="form-control"
-                                    placeholder="Masukkan nama panjang Anda" />
+                                <input value="{{ $pengaturan->user_nama }}" type="text" name="user_nama" id="user_nama"
+                                    class="form-control" placeholder="Masukkan nama panjang Anda" />
                             </div>
                             <div class="col-12 col-md-4 form-group">
                                 <label for="user_alamat" class="form-label">Alamat</label>
-                                <input type="text" name="user_alamat" id="user_alamat" class="form-control"
-                                    placeholder="Masukkan alamat Anda" />
+                                <input value="{{ $pengaturan->user_alamat }}" type="text" name="user_alamat"
+                                    id="user_alamat" class="form-control" placeholder="Masukkan alamat Anda" />
                             </div>
                             <div class="col-12 col-md-4 form-group">
                                 <label for="user_username" class="form-label">Username</label>
-                                <input type="text" name="user_username" id="user_username" class="form-control"
-                                    placeholder="Masukkan username Anda" />
+                                <input value="{{ $pengaturan->user_username }}" type="text" name="user_username"
+                                    id="user_username" class="form-control" placeholder="Masukkan username Anda" />
                             </div>
                             <div class="col-12 col-md-4 form-group">
                                 <label for="user_notelp" class="form-label">Nomor telepon</label>
-                                <input type="text" name="user_notelp" id="user_notelp" class="form-control"
-                                    placeholder="Masukkan Nomor telepon Anda" />
+                                <input value="{{ $pengaturan->user_notelp }}" type="text" name="user_notelp"
+                                    id="user_notelp" class="form-control" placeholder="Masukkan Nomor telepon Anda" />
                             </div>
                             <div class="col-12 col-md-4 form-group">
                                 <label for="user_email" class="form-label">Email</label>
-                                <input type="text" name="user_email" id="user_email" class="form-control"
-                                    placeholder="Masukkan email Anda" />
+                                <input value="{{ $pengaturan->user_email }}" type="text" name="user_email"
+                                    id="user_email" class="form-control" placeholder="Masukkan email Anda" />
                             </div>
                             <div class="col-12 col-md-4 form-group">
                                 <label for="user_password" class="form-label">Password</label>
-                                <input type="text" name="user_password" id="user_password" class="form-control"
-                                    placeholder="Masukkan password Anda" />
+                                <input type="password" name="user_password" id="user_password" class="form-control"
+                                    placeholder="(tidak berubah)" />
                             </div>
                         </div>
                         <div class="row my-3">

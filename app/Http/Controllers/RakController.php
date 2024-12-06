@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Buku;
 use App\Models\Rak;
 use Illuminate\Http\Request;
 
@@ -33,6 +34,14 @@ class RakController extends Controller
 
     public function delete($id)
     {
+        $buku = Buku::where("buku_rak_id", $id)->get();
+
+        if ($buku) {
+            foreach ($buku as $bukus) {
+                Buku::deleteBuku($bukus->buku_id);
+            }
+        }
+
         Rak::deleteRak($id);
         return redirect()->route('rakAdmin')->with('success', 'Data rak berhasil dihapus!');
     }

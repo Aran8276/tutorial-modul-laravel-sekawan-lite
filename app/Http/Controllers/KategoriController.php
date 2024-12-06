@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Buku;
 use App\Models\Kategori;
 use Illuminate\Http\Request;
 
@@ -29,6 +30,14 @@ class KategoriController extends Controller
 
     public function delete($id)
     {
+        $buku = Buku::where("buku_kategori_id", $id)->get();
+
+        if ($buku) {
+            foreach ($buku as $bukus) {
+                Buku::deleteBuku($bukus->buku_id);
+            }
+        }
+
         Kategori::deleteKategori($id);
         return redirect()->route('kategoriAdmin')->with('success', 'Data kategori berhasil dihapus!');
     }

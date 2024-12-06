@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Buku;
 use App\Models\Penulis;
 use Illuminate\Http\Request;
 
@@ -33,6 +34,14 @@ class PenulisController extends Controller
 
     public function delete($id)
     {
+        $buku = Buku::where("buku_penulis_id", $id)->get();
+
+        if ($buku) {
+            foreach ($buku as $bukus) {
+                Buku::deleteBuku($bukus->buku_id);
+            }
+        }
+
         Penulis::deletePenulis($id);
         return redirect()->route('penulisAdmin')->with('success', 'Data penulis berhasil dihapus!');
     }

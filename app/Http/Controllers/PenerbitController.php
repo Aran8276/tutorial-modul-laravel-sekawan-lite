@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Buku;
 use App\Models\Penerbit;
 use Illuminate\Http\Request;
 
@@ -35,6 +36,14 @@ class PenerbitController extends Controller
 
     public function delete($id)
     {
+        $buku = Buku::where("buku_penerbit_id", $id)->get();
+
+        if ($buku) {
+            foreach ($buku as $bukus) {
+                Buku::deleteBuku($bukus->buku_id);
+            }
+        }
+
         Penerbit::deletePenerbit($id);
         return redirect()->route('penerbitAdmin')->with('success', 'Data penerbit berhasil dihapus!');
     }

@@ -176,7 +176,9 @@ class PagesController extends Controller
 
     public function pengaturanAdmin()
     {
-        return view("admin.pengaturan-admin", ['level' => 'admin']);
+        $pengaturan = Auth::user();
+
+        return view("admin.pengaturan-admin", ['level' => 'admin', 'pengaturan' => $pengaturan]);
     }
 
     public function dashboardSiswa()
@@ -202,6 +204,8 @@ class PagesController extends Controller
 
     public function pengaturanSiswa()
     {
-        return view("siswa.pengaturan-siswa", ["level" => "siswa"]);
+        $pengaturan = Auth::user();
+
+        return view("siswa.pengaturan-siswa", ["level" => "siswa", "pengaturan" => $pengaturan]);
     }
 }

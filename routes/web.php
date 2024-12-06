@@ -34,6 +34,8 @@ Route::middleware(AuthMiddleware::class)->group(function () {
     Route::get('/pengaturan', [PagesController::class, 'pengaturanSiswa'])->name('pengaturanSiswa');
     Route::get('/pinjam/{id}', [PeminjamanController::class, 'create'])->name('action.pinjam-buku');
 
+    Route::put('/pengaturan', [AuthController::class, 'updateProfile'])->name('action.update-profile');
+
     // admin
     Route::middleware(RoleMiddleware::class)->group(function () {
         // dashboard

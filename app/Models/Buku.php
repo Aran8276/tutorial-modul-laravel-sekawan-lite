@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Storage;
 
 class Buku extends Model
 {
@@ -46,6 +47,22 @@ class Buku extends Model
 
     protected static function deleteBuku($id)
     {
+        $buku = Buku::find($id);
+        $peminjaman_detail = PeminjamanDetail::where('peminjaman_detail_buku_id', $id)->get();
+
+        // jika peminjaman detail ditemukan
+        if ($peminjaman_detail) {
+            foreach ($peminjaman_detail as $peminjaman_details) {
+                $peminjaman = Peminjaman::find($peminjaman_details)->first();
+                $peminjaman->delete();
+            }
+        }
+
+        // jika ada gambar, sebelumnya akan selalu menghapus walaupun tidak ada gambar
+        if ($buku->buku_urlgambar) {
+            Storage::disk("public")->delete($buku->buku_urlgambar);
+        }
+
         return self::destroy($id);
     }
 
