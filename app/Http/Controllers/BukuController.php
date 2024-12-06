@@ -3,7 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\Buku;
+use App\Models\Peminjaman;
+use App\Models\PeminjamanDetail;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class BukuController extends Controller
 {
@@ -21,6 +24,11 @@ class BukuController extends Controller
             "buku_rak_id" => $request->input("buku_rak_id"),
         ];
         Buku::createBuku($data);
+
+        if ($request->hasFile("buku_urlgambar")) {
+            Buku::uploadGambarBuku($id, $request->file("buku_urlgambar"));
+        }
+
         return redirect()->route('bukuAdmin')->with('success', 'Data buku berhasil ditambahkan!');
     }
 
@@ -41,7 +49,18 @@ class BukuController extends Controller
 
     public function delete($id)
     {
+        $buku = Buku::find($id);
+        $peminjaman_detail = PeminjamanDetail::where('peminjaman_detail_buku_id', $id)->get();
+
+        foreach ($peminjaman_detail as $peminjaman_details) {
+            $peminjaman = Peminjaman::find($peminjaman_details)->first();
+            $peminjaman->delete();
+        }
+
+        Storage::disk("public")->delete($buku->buku_urlgambar);
+
         Buku::deleteBuku($id);
+
         return redirect()->route('bukuAdmin')->with('success', 'Data buku berhasil dihapus!');
     }
 }

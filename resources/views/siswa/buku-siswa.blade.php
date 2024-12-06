@@ -22,8 +22,13 @@
                         @foreach ($buku as $bukus)
                             <div class="card col-12 col-md-4 col-lg-3">
                                 <div class="card-body" style="text-align: center">
-                                    <img src="{{ asset('img/book.png') }}" alt="Bulan" class="book-img"
-                                        style="width: 150px" />
+                                    @if ($bukus->buku_urlgambar == '')
+                                        <img src="{{ asset('img/book.png') }}" alt="Bulan" class="book-img"
+                                            style="width: 150px" />
+                                    @else
+                                        <img src="{{ asset('/storage/buku_pictures/' . basename($bukus->buku_urlgambar)) }}"
+                                            alt="Bulan" class="book-img" style="width: 150px" />
+                                    @endif
                                     <hr />
                                     <p class="text-center fw-bolder fs-4 my-0">
                                         {{ $bukus->buku_judul }}

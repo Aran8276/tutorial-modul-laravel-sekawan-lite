@@ -18,7 +18,7 @@
                             Halaman Tambah Data Buku
                         </li>
                     </ol>
-                    <form action="{{ route('action.create-buku') }}" method="POST">
+                    <form action="{{ route('action.create-buku') }}" method="POST" enctype="multipart/form-data">
                         @csrf
                         <div class="row gap-3">
                             <div class="col-12 col-md-4 form-group">
@@ -88,6 +88,10 @@
                                 <label for="buku_isbn" class="form-label">Nomor ISBN *</label>
                                 <input type="text" name="buku_isbn" id="buku_isbn" class="form-control"
                                     placeholder="Masukkan nomor ISBN" />
+                            </div>
+                            <div class="col-12 col-md-4 form-group">
+                                <label for="buku_urlgambar" class="form-label">Gambar Cover</label>
+                                <input type="file" name="buku_urlgambar" id="buku_urlgambar" class="form-control" />
                             </div>
                         </div>
                         <div class="row my-3">

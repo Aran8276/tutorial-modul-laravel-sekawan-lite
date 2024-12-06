@@ -68,4 +68,15 @@ class Buku extends Model
     {
         return $this->belongsTo(Kategori::class, 'buku_kategori_id', 'kategori_id');
     }
+
+    protected static function uploadGambarBuku($id, $file)
+    {
+        $buku = self::find($id);
+
+        $path = $file->store("buku_pictures", "public");
+
+        $buku->buku_urlgambar = $path;
+
+        $buku->save();
+    }
 }
